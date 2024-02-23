@@ -13,6 +13,7 @@ Organization (HMO) and the firm who sells the plan. Eligible consumers can recei
 purchasing a plan in the insurance exchanges. Consumers without insurance may be subject to a
 penalty. The penalty amount was phased in between 2014 and 2016. Starting in 2019, the penalty
 was eliminated.
+
 You will be provided with a random sample of 2014-2019 enrollment data from the California
 ACA health insurance exchange (called Covered California). The California exchange is divided
 into 19 distinct rating areas which we will consider to be markets. Four large insurers – Anthem
