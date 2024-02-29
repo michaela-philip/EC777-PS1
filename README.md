@@ -1,7 +1,9 @@
 # EC777-PS1
-Empirical IO Problem Set 1
+Empirical IO Problem Set 1 - Spring 2024
 
-The ACA health insurance exchanges were established in every U.S. state in 2014 with the primary
+Assignment by Professor Evan Saltzman
+
+'The ACA health insurance exchanges were established in every U.S. state in 2014 with the primary
 aims of (1) reducing the number of people without health insurance in the U.S. and (2) making
 health in- surance more affordable for those ineligible for employer-provided health insurance or
 publicly-provided health insurance (e.g., Medicare and Medicaid). Exchange consumers can select
@@ -22,4 +24,6 @@ also many small insurers, which have been combined for this analysis. In Califor
 other states), all insurers are required to offer a plan in each metal tier with predetermined cost
 sharing levels (e.g., all silver plans have the same deductible, copays, coinsurance, etc.). Insurers
 can differentiate plans based on provider network type (e.g., HMO or PPO) and which providers
-are included in their networks.
+are included in their networks.'
+
+
