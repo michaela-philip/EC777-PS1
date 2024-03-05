@@ -2,17 +2,13 @@ import pandas as pd
 import numpy as np
 
 def get_shares(filepath):
-    # market_data = pd.DataFrame(columns = ['year', 'rating_area', 'plan_name', 'share'])
-    data = []
+    
+    n_ind = filepath.groupby(['year', 'rating_area', 'plan_name'])['household_size'].sum()
+    n_house = filepath.groupby(['year', 'rating_area', 'plan_name'])['household_size'].size()
 
-    for i in filepath['year'].unique():
-        for j in filepath['rating_area'].unique():
-            total_shares = ((filepath['year']==i) & (filepath['rating_area']==j)).sum()
-            # print(str(i) + str(j) + 'total shares calculated')
-            for k in filepath['plan_name'].unique():
-                share = ((filepath['year']==i) & (filepath['rating_area']==j) & (filepath['plan_name']==k)).sum() / (total_shares)                
-                # market_data = market_data.append({'year': i, 'rating_area': j, 'plan_name': k, 'share': share}, ignore_index=True)
-                data.append({'year': i, 'rating_area': j, 'plan_name': k, 'share': share})
+    market_level = pd.concat({'n_ind': n_ind, 'n_house' : n_house}, axis=1)
 
-    market_data = pd.DataFrame(data)
-    return market_data            
+    market_level['indiv_share'] = (market_level.groupby(['year', 'rating_area', 'plan_name'])['n_ind'].sum()) / (market_level.groupby(['year', 'rating_area'])['n_ind'].sum())
+    market_level['house_share'] = (market_level.groupby(['year', 'rating_area', 'plan_name'])['n_house'].size()) / (market_level.groupby(['year', 'rating_area'])['n_house'].size())
+
+    return market_level
