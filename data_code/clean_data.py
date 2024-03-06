@@ -1,7 +1,10 @@
 import numpy as np
 import pandas as pd
+import sys
 
-from import_data import households, household_plan_year, plans
+sys.path.append('../EC777-PS1')
+
+from data_code.import_data import households, household_plan_year, plans
 from helpers.merge_household_plan import merge_data
 from helpers.shares import get_shares
 from helpers.share_diff import get_diff

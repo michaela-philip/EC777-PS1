@@ -1,4 +1,7 @@
 import pandas as pd
+import sys
+
+sys.path.append('../EC777-PS1')
 
 from helpers.read_data import read_data
 from helpers.merge_household_plan import merge_data
