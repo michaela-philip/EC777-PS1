@@ -23,4 +23,5 @@ market_data.to_csv('./data/output/market_data.csv')
 print('market data csv created')
 
 print(market_data.head())
+print(market_data.tail())
 print(market_data.describe())
