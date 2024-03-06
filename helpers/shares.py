@@ -19,11 +19,11 @@ def get_shares(filepath):
     market_level['ln_indiv_share'] = np.log(market_level['indiv_share'])
     market_level['ln_house_share'] = np.log(market_level['house_share'])
 
-    ln_uninsured_indiv = market_level.loc[market_level['plan_name'] == 'uninsured', 'ln_indiv_share']
+    ln_uninsured_indiv = market_level.loc[market_level['plan_name'] == 'Uninsured', 'ln_indiv_share']
     market_level['ln_uninsured_indiv'] = market_level.groupby(['year', 'rating_area'])['ln_indiv_share'].transform(lambda x: ln_uninsured_indiv.get(x.index))
     market_level['ln_indiv_share_diff'] = market_level['ln_indiv_share'] - market_level['ln_uninsured_indiv']
 
-    ln_uninsured_house = market_level.loc[market_level['plan_name'] == 'uninsured', 'ln_house_share']
+    ln_uninsured_house = market_level.loc[market_level['plan_name'] == 'Uninsured', 'ln_house_share']
     market_level['ln_uninsured_house'] = market_level.groupby(['year', 'rating_area'])['ln_house_share'].transform(lambda x: ln_uninsured_house.get(x.index))
     market_level['ln_house_share_diff'] = market_level['ln_house_share'] - market_level['ln_uninsured_house']    
 
