@@ -1,8 +1,10 @@
 import numpy as np
 import pandas as pd
 import sys
+import os
 
-sys.path.append('../EC777-PS1')
+script_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(script_dir, '..'))
 
 from data_code.import_data import households, household_plan_year, plans
 from helpers.merge_household_plan import merge_data

@@ -1,7 +1,9 @@
 import pandas as pd
+import os
 import sys
 
-sys.path.append('../EC777-PS1')
+script_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(script_dir, '..'))
 
 from helpers.read_data import read_data
 from helpers.merge_household_plan import merge_data
