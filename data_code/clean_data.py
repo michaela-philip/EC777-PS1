@@ -13,6 +13,9 @@ from helpers.share_diff import get_diff
 
 households_plan = merge_data(households, plans)
 
+print(households_plan.head())
+print(households_plan.tail())
+
 market_data = get_shares(households_plan)
 
 market_data.to_csv('./data/output/market_data.csv')
