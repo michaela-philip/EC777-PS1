@@ -20,5 +20,6 @@ print('market data csv created')
 main = merge_market_household(households, market_data, household_plan_year)
 
 main['annual_price'] = (main['premium'] - main['subsidy']) * 12
+main = main.dropna(subset=['rating_area'])
 
 main.to_csv('./data/output/main.csv')
