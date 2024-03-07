@@ -16,11 +16,14 @@ market_data = get_shares(households_plan)
 
 main = merge_market_household(households, market_data, household_plan_year)
 
-main['annual_price'] = (main['premium'] - main['subsidy'] + main['monthly_penalty']) * 12
+main['annual_price'] = (main['premium'] - main['subsidy'] - main['monthly_penalty']) * 12
+main['annual_price_pp'] = main['annual_price'] / main['household_size']
 main = main.dropna(subset=['rating_area'])
 
-avg_price = main.groupby(['year', 'rating_area', 'plan_name'])['annual_price'].mean()
-market_data = pd.merge(market_data, avg_price, on=['year', 'rating_area', 'plan_name'])
+avg_price_pp = main.groupby(['year', 'rating_area', 'plan_name'])['annual_price_pp'].mean()
+avg_price_hh = main.groupby(['year', 'rating_area', 'plan_name'])['annual_price'].mean()
+market_data = pd.merge(market_data, avg_price_pp, on=['year', 'rating_area', 'plan_name'])
+market_data = pd.merge(market_data, avg_price_hh, on=['year', 'rating_area', 'plan_name'])
 
 main.to_csv('./data/output/main.csv')
 print('main csv created')
