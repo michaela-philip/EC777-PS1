@@ -5,8 +5,11 @@ def get_shares(filepath):
 
     n_ind = filepath.groupby(['year', 'rating_area', 'plan_name'])['household_size'].sum()
     n_house = filepath.groupby(['year', 'rating_area', 'plan_name'])['household_size'].size()
+    perc_white = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_white'].mean()
+    fpl = filepath.groupby(['year', 'rating_area', 'plan_name'])['fpl'].mean()
+    perc_male = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_male'].mean()
 
-    market_level = pd.concat({'n_ind': n_ind, 'n_house' : n_house}, axis=1).reset_index()
+    market_level = pd.concat({'n_ind': n_ind, 'n_house' : n_house, 'perc_white' : perc_white, 'fpl' : fpl, 'perc_male' : perc_male}, axis=1).reset_index()
 
     indiv_share = (market_level.groupby(['year', 'rating_area', 'plan_name'])['n_ind'].sum()) / (market_level.groupby(['year', 'rating_area'])['n_ind'].sum())
     indiv_share = indiv_share.rename('indiv_share').reset_index()

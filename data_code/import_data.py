@@ -6,7 +6,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(script_dir, '..'))
 
 from helpers.read_data import read_data
-from helpers.merge_household_plan import merge_data
+from helpers.merge_data import merge_data
 print('function import complete')
 
 household_plan_year = read_data('./data/input/household_plan_year777.csv')
