@@ -13,4 +13,5 @@ market_data = pd.read_csv('./data/output/market_data.csv')
 market_data = get_instruments(market_data)
 
 endog = market_data['annual_price_pp']
-exog = market_data['perc_white', 'perc_male', 'fpl', ]
+exog = market_data['perc_white', 'perc_male', 'fpl', 'year', 'rating_area']
+dependent = market_data['ln_indiv_share_diff']
