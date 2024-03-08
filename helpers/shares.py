@@ -39,6 +39,6 @@ def get_shares(filepath):
     market_level['ln_indiv_share_diff'] = market_level['ln_indiv_share'] - market_level['ln_uninsured_indiv']
     market_level['ln_house_share_diff'] = market_level['ln_house_share'] - market_level['ln_uninsured_house']    
     
-    market_level = pd.merge(market_level, filepath, on = 'plan_name', how = 'outer')
+    # market_level = pd.merge(market_level, filepath, on = 'plan_name', how = 'outer')
 
     return market_level

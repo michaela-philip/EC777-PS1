@@ -6,10 +6,17 @@ def merge_data(filepath1, filepath2):
     return output
     print("household plan merge complete")
 
-def merge_market_household(household, market, plan):
-    # market_minimal = market.drop(columns = ['indiv_share', 'house_share', 'ln_indiv_share', 'ln_house_share', 'ln_uninsured_indiv', 'ln_uninsured_house'])
-    # intermed = pd.merge(household, market_minimal, on=['year', 'rating_area', 'plan_name'], how = 'outer')
-    # output = pd.merge(intermed, plan, on = ['household_id', 'plan_name', 'year'], how = 'outer')
-    output = pd.merge(household, market, on=['year', 'rating_area', 'plan_name'], how = 'outer')
-    output = pd.merge(output, plan, on ='year', how = 'outer')
+def merge_market_price(main, market_data):
+    avg_price_pp = main.groupby(['year', 'rating_area', 'plan_name'])['annual_price_pp'].mean()
+    avg_price_pp = avg_price_pp.rename('avg_price_pp').reset_index()
+    avg_price_hh = main.groupby(['year', 'rating_area', 'plan_name'])['annual_price'].mean()
+    avg_price_hh = avg_price_hh.rename('avg_price_hh').reset_index()
+    market_data = pd.merge(market_data, avg_price_pp, on=['year', 'rating_area', 'plan_name'])
+    market_data = pd.merge(market_data, avg_price_hh, on=['year', 'rating_area', 'plan_name'])
+
+    return market_data
+
+def merge_household_price(households, prices):
+    output = pd.merge(households, prices, on=['household_id', 'year', 'plan_name'], how = 'outer')
+    
     return output
