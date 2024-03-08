@@ -16,9 +16,11 @@ market_data = get_shares(households_plan)
 
 main = merge_market_household(households, market_data, household_plan_year)
 
+main = main.dropna(subset=['rating_area'])
+main = main.drop(main[main['plan_name'] == 'Uninsured'].index)
+
 main['annual_price'] = (main['premium'] - main['subsidy'] - main['monthly_penalty']) * 12
 main['annual_price_pp'] = main['annual_price'] / main['household_size']
-main = main.dropna(subset=['rating_area'])
 
 avg_price_pp = main.groupby(['year', 'rating_area', 'plan_name'])['annual_price_pp'].mean()
 avg_price_hh = main.groupby(['year', 'rating_area', 'plan_name'])['annual_price'].mean()
