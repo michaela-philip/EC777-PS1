@@ -16,7 +16,7 @@ def get_beta(delta, x, z, W):
 
 def outer_loop(x, z, c, observe_share, nus, sigma, W):
     def obj_sigma(sigma):
-        delta, share = run_inner_loop(c, sigma, nus, observe_share, np.zeros(J))
+        delta, share = run_inner_loop(c, sigma, nus, observe_share, np.zeros(len(c)))
         beta = get_beta(delta, x, z, W)
         objective = gmm_objective(delta, x, z, beta, W)
         return objective
