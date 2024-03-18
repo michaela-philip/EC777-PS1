@@ -22,7 +22,7 @@ def get_beta(delta, x, z, W):
     b = np.matmul(x.T, z, W, z.T, delta)
     return np.solve(A, b)
 
-def outer_loop(x, z, c, observe_share, nus, sigma, W): #c is variables for which we are estimating random coefficients
+def outer_loop(x, z, c, observe_share, nus, sigma, W): 
     def obj_sigma(sigma):
         delta, share = run_inner_loop(c, sigma, nus, observe_share, np.zeros(len(c)))
         beta = get_beta(delta, x, z, W)
