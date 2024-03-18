@@ -1,11 +1,12 @@
 import pandas as pd
 import numpy as np
+#written with assistance from Matt Gentry
 
-#calculate mu
+#calculate mu (consumer-specific term)
 def get_mu(x, sigma, nu):
     return np.matmul(x, nu*sigma)
 
-#predict shares
+#predict shares s_jt (function of consumer-independent and consumer-specific terms)
 def predict_logit_share(delta, mu):
     J = len(delta)
     prob = np.exp(delta + mu) 
@@ -13,6 +14,7 @@ def predict_logit_share(delta, mu):
     pred_share = prob / sum_prob
     return pred_share
 
+#predict shares for each value of nu (random tastes)
 def predict_rc_logit_share(delta, x, sigma, nus):
     R = nus.shape[1]
     pred_share = np.zeros(delta.size)

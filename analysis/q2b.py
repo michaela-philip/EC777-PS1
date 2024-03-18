@@ -10,6 +10,7 @@ sys.path.append(os.path.join(script_dir, '..'))
 
 from helpers.inner_loop import run_inner_loop, predict_rc_logit_share
 
+#testing using fake numbers
 J = 50
 R = 500
 K = 2   # Num random coefficients
