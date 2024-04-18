@@ -14,13 +14,22 @@ from helpers.inner_loop import run_inner_loop
 def gmm_objective(delta, x, z, beta, W):
     xi = delta - np.matmul(x, beta)
     mom = np.matmul(z.T, xi)
-    return np.matmul(mom.T, W, mom)
+    temp = np.matmul(mom.T, W)
+    return np.matmul(temp, mom)
+    # return np.matmul(mom.T, W, mom)
 
 #get closed form solution for beta - this allows us to only optimize over sigma
 def get_beta(delta, x, z, W):
-    A = np.matmul(x.T, z, W, z.T, x)
-    b = np.matmul(x.T, z, W, z.T, delta)
-    return np.solve(A, b)
+    temp = np.matmul(x.T, z)
+    temp = np.matmul(temp, W)
+    A = np.matmul(temp, z.T)
+    A = np.matmul(A, x)
+
+    temp2 = np.matmul(x.T, z)
+    temp2 = np.matmul(temp2, W)
+    b = np.matmul(temp2, z.T)
+    b = np.matmul(b, delta)
+    return np.linalg.solve(A, b)
 
 def outer_loop(x, z, c, observe_share, nus, sigma, W): 
     def obj_sigma(sigma):
@@ -28,5 +37,6 @@ def outer_loop(x, z, c, observe_share, nus, sigma, W):
         beta = get_beta(delta, x, z, W)
         objective = gmm_objective(delta, x, z, beta, W)
         return objective
-    result = opt.minimize(obj_sigma, sigma, method='Nelder_Mead')
+    print("got objective function")
+    result = opt.minimize(obj_sigma, sigma, method='Nelder-Mead')
     return result
