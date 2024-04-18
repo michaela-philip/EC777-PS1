@@ -4,7 +4,9 @@ import numpy as np
 
 #calculate mu (consumer-specific term)
 def get_mu(c, sigma, nu): #c is variables for which we are estimating random coefficients
-    return np.matmul(c, nu*sigma)
+    # temp = np.matmul(c, sigma)
+    # return np.matmul(temp, nu)
+    return np.matmul(c @ sigma @ nu)
 
 #predict shares s_jt (function of consumer-independent and consumer-specific terms)
 def predict_logit_share(delta, mu):
