@@ -31,12 +31,12 @@ def get_beta(delta, x, z, W):
     b = np.matmul(b, delta)
     return np.linalg.solve(A, b)
 
-def outer_loop(x, z, c, observe_share, nus, sigma, W): 
-    def obj_sigma(sigma):
-        delta, share = run_inner_loop(c, sigma, nus, observe_share, np.zeros(len(c)))
+def outer_loop(x, z, c, observe_share, nus, theta, W): 
+    def obj_theta(theta):
+        delta, share = run_inner_loop(c, theta, nus, observe_share, np.zeros(len(c)))
         beta = get_beta(delta, x, z, W)
         objective = gmm_objective(delta, x, z, beta, W)
         return objective
     print("got objective function")
-    result = opt.minimize(obj_sigma, sigma, method='Nelder-Mead')
+    result = opt.minimize(obj_theta, theta, method='Nelder-Mead')
     return result
