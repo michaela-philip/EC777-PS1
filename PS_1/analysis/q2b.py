@@ -19,15 +19,21 @@ K = 2   # Num random coefficients
 Y = 15 #other observable characteristics
 nus = np.random.normal(0, 1, [R,K])
 x = np.random.rand(J,Y)
-sigma = np.random.rand(K, K)
+# sigma = np.random.rand(K, K)
 delta = np.random.rand(J)
 z = np.random.rand(J,(K+Y))
 W = np.eye((K+Y))
 c = np.random.rand(J, K)
+theta = np.random.rand(K)
 
-# share_0 = predict_rc_logit_share(delta, x, sigma, nus)
+#test inner loop functions
+# mu = get_mu(c, theta, nus[0,:])
+# logit_share_test = predict_logit_share(delta, mu)
+share_0 = predict_rc_logit_share(delta, c, theta, nus)
+# delta_1, share_1 = run_inner_loop(c, theta, nus, share_0, np.zeros(J))
 
-# delta_1, share_1 = run_inner_loop(c, sigma, nus, share_0, np.zeros(J))
 
-mu = get_mu(c, sigma, nus[0,:])
-# theta = outer_loop(x, z, c, np.ones(J), nus, sigma, W)
+#test outer loop functions
+# beta = get_beta(delta, x, z, W)
+# obj = gmm_objective(delta, x, z, beta, W)
+theta_2 = outer_loop(x, z, c, share_0, nus, theta, W)
