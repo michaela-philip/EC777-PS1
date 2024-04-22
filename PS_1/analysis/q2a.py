@@ -46,7 +46,7 @@ from helpers.outer_loop import outer_loop
 
 x = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
 z = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
-c = market_data[['Metal_Level', 'HMO']] 
+c = market_data[['AV', 'HMO']] 
 theta = np.array([nested_logit_AV, nested_logit_HMO])
 observed_share = market_data['ln_house_share']
 W = np.eye(x.shape[1])
