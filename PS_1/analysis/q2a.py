@@ -7,6 +7,7 @@ from linearmodels.iv import IV2SLS
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(script_dir, '..'))
+os.chdir('PS_1')
 
 from helpers.instruments import get_instruments
 
@@ -32,3 +33,28 @@ exog = pd.get_dummies(market_data[['perc_white', 'perc_male', 'fpl', 'Insurer', 
 
 nested_logit_model = IV2SLS(dependent, exog, endog, instrument).fit()
 print(nested_logit_model.summary)
+
+#pull coefficients for later use
+nested_logit_AV = nested_logit_model.params['AV']
+nested_logit_HMO = nested_logit_model.params['HMO']
+print(nested_logit_AV, nested_logit_HMO)
+
+
+###BLP
+from helpers.inner_loop import run_inner_loop, predict_rc_logit_share, get_mu, predict_logit_share
+from helpers.outer_loop import outer_loop
+
+x = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
+z = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
+c = market_data[['Metal_Level', 'HMO']] 
+theta = np.array([nested_logit_AV, nested_logit_HMO])
+observed_share = market_data['ln_house_share']
+W = np.eye(x.shape[1])
+R = 500
+K = c.shape[1]
+
+np.random.seed(123)
+nus = np.random.normal(0, 1, [R,K])
+
+theta_hat = outer_loop(x, z, c, observed_share, nus, theta, W)
+print(theta_hat)
