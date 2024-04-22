@@ -13,6 +13,7 @@ from helpers.instruments import get_instruments
 
 market_data = pd.read_csv('./data/output/market_data.csv')
 market_data = get_instruments(market_data)
+market_data = market_data.dropna(subset=['AV', 'HMO'])
 
 #Logit Model
 endog = market_data['avg_price_pp']
