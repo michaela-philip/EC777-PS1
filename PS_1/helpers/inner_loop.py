@@ -25,7 +25,9 @@ def predict_rc_logit_share(delta, c, theta, nus):
     R = nus.shape[0]
     pred_share = np.zeros(delta.size)
     for r in range(R):
-        mu_r = get_mu(c, theta, nus[r,:])
+        nu_r = nus[r,:]
+        nu_r = nu_r[:, np.newaxis]
+        mu_r = get_mu(c, theta, nu_r)
         pred_share_r = predict_logit_share(delta, mu_r)
         pred_share += pred_share_r
     pred_share = pred_share / R
