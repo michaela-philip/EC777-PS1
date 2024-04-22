@@ -15,6 +15,7 @@ def get_mu(c, theta, nu): #c is variables for which we are estimating random coe
 #predict shares s_jt (function of consumer-independent and consumer-specific terms)
 def predict_logit_share(delta, mu): 
     J = len(delta)
+    delta = delta.values if isinstance(delta, pd.DataFrame) else delta  # convert DataFrame to numpy array
     prob = np.exp(delta + mu) 
     sum_prob = 1 + np.sum(prob)
     pred_share = prob / sum_prob
