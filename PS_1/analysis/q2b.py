@@ -43,6 +43,7 @@ share_0 = predict_rc_logit_share(delta, c, theta, nus)
 # beta = get_beta(delta, x, z, W)
 # obj = gmm_objective(delta, x, z, beta, W)
 theta_2 = outer_loop(x, z, c, share_0, nus, theta, W)
+print(theta_2)
 
 # #creating matrices
 # market_data = get_instruments(market_data)
