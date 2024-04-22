@@ -52,7 +52,6 @@ observed_share = market_data['ln_house_share']
 W = np.eye(x.shape[1])
 R = 500
 K = c.shape[1]
-c = c.values
 
 np.random.seed(123)
 nus = np.random.normal(0, 1, [R,K])
