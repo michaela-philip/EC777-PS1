@@ -5,7 +5,9 @@ import numpy as np
 #calculate mu (consumer-specific term)
 def get_mu(c, theta, nu): #c is variables for which we are estimating random coefficients
     sigma = np.diagflat(theta) #theta is our vector of random coefficients but we need a square matrix for this -> we make a diagonal matrix, sigma
-    return (c @ sigma @ nu) #Jx1 vector
+    c_values = c.values if isinstance(c, pd.DataFrame) else c  # convert DataFrame to numpy array
+    return (c_values @ sigma @ nu)
+    # return (c @ sigma @ nu) #Jx1 vector
 
 #predict shares s_jt (function of consumer-independent and consumer-specific terms)
 def predict_logit_share(delta, mu): 
