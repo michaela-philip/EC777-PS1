@@ -16,7 +16,7 @@ from helpers.instruments import get_instruments
 
 market_data = pd.read_csv('./data/output/market_data.csv')
 market_data = get_instruments(market_data)
-from PS_1.analysis.q2a import nested_logit_AV, nested_logit_HMO
+from analysis.q2a import nested_logit_AV, nested_logit_HMO
 
 #testing using fake numbers
 # J = 50
@@ -55,6 +55,7 @@ observed_share = market_data['ln_house_share']
 W = np.eye(x.shape[1])
 R = 500
 K = c.shape[1]
+c = c.values
 
 np.random.seed(123)
 nus = np.random.normal(0, 1, [R,K])
