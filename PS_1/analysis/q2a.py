@@ -14,6 +14,7 @@ from helpers.instruments import get_instruments
 market_data = pd.read_csv('./data/output/market_data.csv')
 market_data = get_instruments(market_data)
 market_data = market_data.dropna(subset=['AV', 'HMO'])
+market_data = market_data[market_data['house_share'] >= 0.01]
 
 #Logit Model
 endog = market_data['avg_price_pp']
@@ -42,6 +43,10 @@ print(nested_logit_AV, nested_logit_HMO)
 
 
 ###BLP
+# market_data = pd.read_csv('./data/output/market_data.csv')
+# market_data = get_instruments(market_data)
+# market_data = market_data.dropna(subset=['AV', 'HMO'])
+
 from helpers.inner_loop import run_inner_loop, predict_rc_logit_share, get_mu, predict_logit_share
 from helpers.outer_loop import outer_loop
 
@@ -49,13 +54,18 @@ x = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrum
 z = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
 c = market_data[['AV', 'HMO']] 
 theta = np.array([nested_logit_AV, nested_logit_HMO])
-observed_share = market_data['ln_house_share']
+observed_share = np.array(market_data['house_share'].values).reshape(-1, 1)
 W = np.eye(x.shape[1])
 R = 500
 K = c.shape[1]
+# initial = np.array([nested_logit_AV, nested_logit_HMO])
 
-np.random.seed(123)
+# np.random.seed(123)
 nus = np.random.normal(0, 1, [R,K])
+delta_0 = np.array(market_data['ln_house_share_diff']).reshape(-1, 1)
 
-theta_hat = outer_loop(x, z, c, observed_share, nus, theta, W)
-print(theta_hat)
+delta, pred_share = run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=1, tol=1e-6)
+print(delta, pred_share)
+
+# theta_hat = outer_loop(x, z, c, observed_share, nus, theta, W)
+# print(theta_hat)
