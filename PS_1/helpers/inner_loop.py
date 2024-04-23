@@ -11,54 +11,42 @@ def get_mu(c, theta, nu): #c is variables for which we are estimating random coe
 def predict_logit_share(delta, mu): 
     J = len(delta)
     prob = np.exp(delta + mu) 
-    print('prob', prob.mean())
-    # print('prob', prob[0:5])
+    # print('prob', prob.mean())
     sum_prob = 1 + np.sum(prob)
-    print('sum_prob', sum_prob)
     # print('sum_prob', sum_prob)
+    if sum_prob == 'nan':
+        print('sum_prob is nan')
     pred_share = prob / sum_prob
-    # print('pred_share', pred_share[0:5])
     return pred_share #Jx1 vector
 
 #predict shares for each value of nu (random tastes)
 def predict_rc_logit_share(delta, c, theta, nus):
-    print('running rc_logit_share')
     R = nus.shape[0]
     pred_share = np.zeros((delta.size, 1))
-    # print('delta', delta[0:5])
     for r in range(R):
         nu_r = nus[r,:]
         nu_r = nu_r[:, np.newaxis]
         mu_r = get_mu(c, theta, nu_r)
-        print('mu', mu_r.mean())
-        # print('mu_', r, mu_r.shape)
         pred_share_r = predict_logit_share(delta, mu_r)
-        # print('pred_share_r', pred_share_r[0:5])
-        # print('pred_share_r', pred_share_r.shape)
-        # print('pred_share', pred_share.shape)
         pred_share += pred_share_r
-        # print('pred share', pred_share[0:5])
-        # print('pred_share updated', pred_share.shape)
-    # print('pred_share before division', pred_share[0:5])
     pred_share = pred_share / R
-    # print('pred_share', pred_share[0:5])
     return pred_share #Jx1 vector
 
 def contraction_map(pred_share, observed_share, initial): 
-    # return initial + np.log(observed_share / pred_share) #need to make sure that this operation works row by row
-    print('initial', initial[0:5], 'observe', observed_share[0:5], 'pred', pred_share[0:5])
-    return initial + np.log(observed_share) - np.log(pred_share)
+    # print('initial', initial[0:5], 'observe', observed_share[0:5], 'pred', pred_share[0:5])
+    return initial + np.log(observed_share / pred_share) #need to make sure that this operation works row by row
+    # return initial + np.log(observed_share) - np.log(pred_share)
 
 
 def run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1e-12):
     for i in range(max_iter):
-        # print('delta_0', delta_0[0:5])
-        pred_share = predict_rc_logit_share(delta_0, c, theta, nus) #this is the same every time for some reason
-        # print('going to contraction map')
+        pred_share = predict_rc_logit_share(delta_0, c, theta, nus) 
+        if np.isnan(pred_share).any():
+            print('pred_share contains nan', i)
+            break
         delta = contraction_map(pred_share, observed_share, delta_0)
-        print('delta', delta[0:5])
-        print('delta_0', delta_0[0:5])
         if np.abs(delta - delta_0).max() < tol:
+            print('converged')
             break
         delta_0 = delta
         # print('iteration', i, 'delta', delta_0[0:5])
