@@ -11,9 +11,7 @@ def get_mu(c, theta, nu): #c is variables for which we are estimating random coe
 def predict_logit_share(delta, mu): 
     J = len(delta)
     prob = np.exp(delta + mu) 
-    # print('prob', prob.mean())
     sum_prob = 1 + np.sum(prob)
-    # print('sum_prob', sum_prob)
     if sum_prob == 'nan':
         print('sum_prob is nan')
     pred_share = prob / sum_prob
@@ -33,37 +31,38 @@ def predict_rc_logit_share(delta, c, theta, nus):
     return pred_share #Jx1 vector
 
 def contraction_map(pred_share, observed_share, initial): 
-    # print('initial', initial[0:5], 'observe', observed_share[0:5], 'pred', pred_share[0:5])
     return initial + np.log(observed_share / pred_share) #need to make sure that this operation works row by row
-    # return initial + np.log(observed_share) - np.log(pred_share)
 
 
 def run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1e-12):
     for i in range(max_iter):
         pred_share = predict_rc_logit_share(delta_0, c, theta, nus) 
-        if np.isnan(pred_share).any():
-            print('pred_share contains nan', i)
-            break
         delta = contraction_map(pred_share, observed_share, delta_0)
         if np.abs(delta - delta_0).max() < tol:
-            print('converged')
+            print('converged', i, delta)
             break
         delta_0 = delta
-        # print('iteration', i, 'delta', delta_0[0:5])
     return delta, pred_share #two Jx1 vectors
 
-# ###test code###
-# x = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
-# z = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
-# c = market_data[['AV', 'HMO']] 
-# theta = np.array([nested_logit_AV, nested_logit_HMO])
-# observed_share = np.array(market_data['ln_house_share']).reshape(-1, 1)
-# W = np.eye(x.shape[1])
-# R = 500
-# K = c.shape[1]
-# # initial = np.array([nested_logit_AV, nested_logit_HMO])
+def market_year_inner_loop(df, theta, nus):
+    grouped = df.groupby(['rating_area', 'year'])
+    delta_all = []
+    for name, group in grouped:
+        x = group[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
+        z = group[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
+        c = group[['AV', 'HMO']] 
+        observed_share = np.array(group['house_share'].values).reshape(-1, 1)
+        delta_0 = np.array(group['ln_house_share_diff']).reshape(-1, 1)
+        W = np.eye(x.shape[1])
+        R = 500
+        K = c.shape[1]
+        delta, pred_share = run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1e-12)
+        delta_df = pd.DataFrame(delta, columns=['delta'])
+        delta_df['group'] = str(name)
+        # Append the delta DataFrame to delta_all list
+        delta_all.append(delta_df)
 
-# np.random.seed(123)
-# nus = np.random.normal(0, 1, [R,K])
+    # Concatenate all DataFrames in the list into a single DataFrame
+    delta_all = pd.concat(delta_all, ignore_index=True)
 
-# delta_0 = np.zeros((1929, 1))
+    return delta_all
