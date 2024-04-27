@@ -33,7 +33,6 @@ def predict_rc_logit_share(delta, c, theta, nus):
 def contraction_map(pred_share, observed_share, initial): 
     return initial + np.log(observed_share / pred_share) #need to make sure that this operation works row by row
 
-
 def run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1e-12):
     for i in range(max_iter):
         pred_share = predict_rc_logit_share(delta_0, c, theta, nus) 
@@ -42,7 +41,7 @@ def run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1
             print('converged', i, delta)
             break
         delta_0 = delta
-    return delta, pred_share #two Jx1 vectors
+    return delta #Jx1 vector
 
 def market_year_inner_loop(df, theta, nus):
     grouped = df.groupby(['rating_area', 'year'])
@@ -56,7 +55,7 @@ def market_year_inner_loop(df, theta, nus):
         W = np.eye(x.shape[1])
         R = 500
         K = c.shape[1]
-        delta, pred_share = run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1e-12)
+        delta = run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1e-12)
         delta_df = pd.DataFrame(delta, columns=['delta'])
         delta_df['group'] = str(name)
         # Append the delta DataFrame to delta_all list
