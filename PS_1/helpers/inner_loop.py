@@ -38,7 +38,7 @@ def run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1
         pred_share = predict_rc_logit_share(delta_0, c, theta, nus) 
         delta = contraction_map(pred_share, observed_share, delta_0)
         if np.abs(delta - delta_0).max() < tol:
-            print('converged', i, delta)
+            # print('converged', i, delta)
             break
         delta_0 = delta
     return delta #Jx1 vector
