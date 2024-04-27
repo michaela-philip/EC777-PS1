@@ -20,6 +20,11 @@ def gmm_objective(delta, x, z, beta, W):
 
 #get closed form solution for beta - this allows us to only optimize over sigma
 def get_beta(delta, x, z, W):
+    x = x.values
+    z = z.values
+    delta = delta.values
+    # W = W.values
+
     temp = np.matmul(x.T, z)
     temp = np.matmul(temp, W)
     A = np.matmul(temp, z.T)
@@ -29,11 +34,26 @@ def get_beta(delta, x, z, W):
     temp2 = np.matmul(temp2, W)
     b = np.matmul(temp2, z.T)
     b = np.matmul(b, delta)
+
     return np.linalg.solve(A, b)
 
 def outer_loop(x, z, c, observe_share, nus, theta, W): 
     def obj_theta(theta):
         delta, share = run_inner_loop(c, theta, nus, observe_share, np.zeros(len(c)))
+        beta = get_beta(delta, x, z, W)
+        objective = gmm_objective(delta, x, z, beta, W)
+        return objective
+    print("got objective function")
+    result = opt.minimize(obj_theta, theta, method='Nelder-Mead')
+    return result
+
+def market_year_outer_loop(market_data, theta, nus, R, K):
+    def obj_theta(theta):
+        delta_all = market_year_inner_loop(market_data, theta, nus)
+        delta = delta_all['delta']
+        x = pd.get_dummies(market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh']], dtype=float)
+        z = pd.get_dummies(market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'instrument']], dtype=float)
+        W = np.eye(x.shape[1])
         beta = get_beta(delta, x, z, W)
         objective = gmm_objective(delta, x, z, beta, W)
         return objective
