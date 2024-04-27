@@ -63,18 +63,3 @@ K = c.shape[1]
 R = 500
 J = 50
 K = 2
-
-c = pd.DataFrame(np.random.rand(J, K))
-theta = np.random.rand(K)
-observed_share = np.random.rand(J).reshape(-1, 1)
-delta_0 = np.zeros(J).reshape(-1, 1)
-# np.random.seed(123)
-nus = np.random.normal(0, 1, [R,K])
-
-delta, pred_share = run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=1000, tol=1e-6)
-# print(delta, pred_share)
-
-# theta_hat = outer_loop(x, z, c, observed_share, nus, theta, W)
-# print(theta_hat)
-
-total_shares = market_data.groupby(['year', 'rating_area'])['house_share'].sum()
