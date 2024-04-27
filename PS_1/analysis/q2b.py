@@ -10,58 +10,17 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(script_dir, '..'))
 os.chdir('PS_1')
 
-from helpers.inner_loop import run_inner_loop, predict_rc_logit_share, get_mu, predict_logit_share
-from helpers.outer_loop import outer_loop
+from helpers.inner_loop import run_inner_loop, predict_rc_logit_share, get_mu, predict_logit_share, market_year_inner_loop
+from helpers.outer_loop import outer_loop, market_year_outer_loop
 from helpers.instruments import get_instruments
 
 market_data = pd.read_csv('./data/output/market_data.csv')
 market_data = get_instruments(market_data)
 from analysis.q2a import nested_logit_AV, nested_logit_HMO
 
-#testing using fake numbers
-J = 50
-R = 500
-K = 2   # Num random coefficients
-Y = 15 #other observable characteristics
-x = np.random.rand(J,(K+Y))
-sigma = np.random.rand(K, K)
-delta = np.random.rand(J)
-z = np.random.rand(J,(K+Y))
-W = np.eye((K+Y))
-c = np.random.rand(J, K)
-theta = np.random.rand(K)
+# np.random.seed(123)
 nus = np.random.normal(0, 1, [R,K])
-obs = np.random.rand(J).reshape(-1,1)
-delta_0 = np.zeros(J).reshape(-1, 1)
+theta = np.array([nested_logit_AV, nested_logit_HMO])
 
-#test inner loop functions
-# mu = get_mu(c, theta, nus[0,:])
-# logit_share_test = predict_logit_share(delta, mu)
-# share_0 = predict_rc_logit_share(delta, c, theta, nus)
-delta_1, share_1 = run_inner_loop(c, theta, nus, obs, delta_0)
-
-
-#test outer loop functions
-# beta = get_beta(delta, x, z, W)
-# obj = gmm_objective(delta, x, z, beta, W)
-# theta_2 = outer_loop(x, z, c, share_0, nus, theta, W)
-# print(theta_2)
-
-# #creating matrices
-# market_data = get_instruments(market_data)
-
-# x = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
-# z = market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
-# c = market_data[['Metal_Level', 'HMO']] 
-# theta = np.array([nested_logit_AV, nested_logit_HMO])
-# observed_share = market_data['ln_house_share']
-# W = np.eye(x.shape[1])
-# R = 500
-# K = c.shape[1]
-# c = c.values
-
-np.random.seed(123)
-nus = np.random.normal(0, 1, [R,K])
-
-theta_hat = outer_loop(x, z, c, observed_share, nus, theta, W)
-print(theta_hat)
+#run BLP
+results = market_year_outer_loop(market_data, theta, nus, 500, 2)
