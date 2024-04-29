@@ -16,11 +16,13 @@ from helpers.instruments import get_instruments
 
 market_data = pd.read_csv('./data/output/market_data.csv')
 market_data = get_instruments(market_data)
-from analysis.q2a import nested_logit_AV, nested_logit_HMO
+from analysis.q2a import nested_logit_AV, nested_logit_HMO, logit_stargazer, nested_logit_stargazer
 
-# np.random.seed(123)
+np.random.seed(123)
+R = 500
+K = 2
 nus = np.random.normal(0, 1, [R,K])
 theta = np.array([nested_logit_AV, nested_logit_HMO])
 
 #run BLP
-results = market_year_outer_loop(market_data, theta, nus, 500, 2)
+theta_2, beta = market_year_outer_loop(market_data, theta, nus, 500, 2)
