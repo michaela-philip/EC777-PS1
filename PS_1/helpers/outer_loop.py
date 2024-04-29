@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import scipy.optimize as opt
-from helpers.inner_loop import run_inner_loop
+from helpers.inner_loop import run_inner_loop, market_year_inner_loop
 #written with assistance from Matt Gentry
 
 #THE BIG IDEA
