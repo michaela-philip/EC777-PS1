@@ -6,8 +6,8 @@ import statsmodels.api as sm
 from linearmodels.iv import IV2SLS
 import scipy.optimize as opt
 
-script_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.join(script_dir, '..'))
+# script_dir = os.path.dirname(os.path.realpath(__file__))
+# sys.path.append(os.path.join(script_dir, '..'))
 # os.chdir('PS_1')
 
 from helpers.inner_loop import run_inner_loop, predict_rc_logit_share, get_mu, predict_logit_share, market_year_inner_loop
