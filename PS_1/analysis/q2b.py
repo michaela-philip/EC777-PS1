@@ -26,3 +26,4 @@ theta = np.array([nested_logit_AV, nested_logit_HMO])
 
 #run BLP
 theta_2, beta = market_year_outer_loop(market_data, theta, nus, 500, 2)
+print(theta_2, beta)
