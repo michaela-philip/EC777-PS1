@@ -7,7 +7,7 @@ from linearmodels.iv import IV2SLS
 from stargazer.stargazer import Stargazer
 script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(script_dir, '..'))
-os.chdir('PS_1')
+# os.chdir('PS_1')
 
 from helpers.instruments import get_instruments
 
