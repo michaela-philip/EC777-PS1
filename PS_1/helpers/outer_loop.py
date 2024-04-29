@@ -48,7 +48,9 @@ def outer_loop(x, z, c, observe_share, nus, theta, W):
     return result
 
 def market_year_outer_loop(market_data, theta, nus, R, K):
+    beta = None
     def obj_theta(theta):
+        nonlocal beta
         delta_all = market_year_inner_loop(market_data, theta, nus)
         delta = delta_all['delta']
         x = pd.get_dummies(market_data[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh']], dtype=float)
@@ -56,7 +58,7 @@ def market_year_outer_loop(market_data, theta, nus, R, K):
         W = np.eye(x.shape[1])
         beta = get_beta(delta, x, z, W)
         objective = gmm_objective(delta, x, z, beta, W)
-        return objective
+        return objective, beta
     print("got objective function")
     result = opt.minimize(obj_theta, theta, method='Nelder-Mead')
-    return result
+    return result, beta
