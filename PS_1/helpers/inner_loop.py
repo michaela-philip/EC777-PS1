@@ -38,15 +38,16 @@ def run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1
         pred_share = predict_rc_logit_share(delta_0, c, theta, nus) 
         delta = contraction_map(pred_share, observed_share, delta_0)
         if np.abs(delta - delta_0).max() < tol:
-            # print('converged', i, delta)
+            print('converged', i)
             break
         delta_0 = delta
-    return delta #Jx1 vector
+    return delta, pred_share #Jx1 vectors
 
 def market_year_inner_loop(df, theta, nus):
     grouped = df.groupby(['rating_area', 'year'])
     delta_all = []
     for name, group in grouped:
+        print('starting', name)
         x = group[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
         z = group[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
         c = group[['AV', 'HMO']] 
@@ -55,11 +56,12 @@ def market_year_inner_loop(df, theta, nus):
         W = np.eye(x.shape[1])
         R = 500
         K = c.shape[1]
-        delta = run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1e-12)
+        delta, pred_share = run_inner_loop(c, theta, nus, observed_share, delta_0, max_iter=10000, tol=1e-12)
         delta_df = pd.DataFrame(delta, columns=['delta'])
         delta_df['group'] = str(name)
         # Append the delta DataFrame to delta_all list
         delta_all.append(delta_df)
+        print(name , ' done')
 
     # Concatenate all DataFrames in the list into a single DataFrame
     delta_all = pd.concat(delta_all, ignore_index=True)
