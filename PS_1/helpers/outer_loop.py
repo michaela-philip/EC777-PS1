@@ -12,6 +12,9 @@ from helpers.inner_loop import run_inner_loop, market_year_inner_loop
 
 #define the objective function
 def gmm_objective(delta, x, z, beta, W):
+    delta = delta.values
+    x = x.values
+    z = z.values
     xi = delta - np.matmul(x, beta)
     mom = np.matmul(z.T, xi)
     temp = np.matmul(mom.T, W)
