@@ -24,8 +24,8 @@ dependent = market_data['ln_indiv_share_diff']
 instrument = market_data['instrument']
 
 logit_model = IV2SLS(dependent, exog, endog, instrument).fit()
-print(logit_model.summary)
-logit_stargazer = Stargazer([logit_model])
+# print(logit_model.summary)
+# logit_stargazer = Stargazer([logit_model])
 
 
 #Nested Logit Model
@@ -37,11 +37,13 @@ market_data['ln_nested_shares'] = np.log(market_data['nested_shares'])
 exog = pd.get_dummies(market_data[['perc_white', 'perc_male', 'fpl', 'Insurer', 'AV', 'Metal_Level', 'HMO', 'ln_nested_shares']], drop_first=True)
 
 nested_logit_model = IV2SLS(dependent, exog, endog, instrument).fit()
-print(nested_logit_model.summary)
-nested_logit_stargazer = Stargazer([nested_logit_model])
+# print(nested_logit_model.summary)
+# nested_logit_stargazer = Stargazer([nested_logit_model])
 
 
 #pull coefficients for later use
 nested_logit_AV = nested_logit_model.params['AV']
 nested_logit_HMO = nested_logit_model.params['HMO']
-print(nested_logit_AV, nested_logit_HMO)
+# print(nested_logit_AV, nested_logit_HMO)
+
+berry_inversion_stargazer = Stargazer([logit_model, nested_logit_model])
