@@ -47,6 +47,12 @@ def outer_loop(x, z, c, observe_share, nus, theta, W):
     result = opt.minimize(obj_theta, theta, method='Nelder-Mead')
     return result
 
+def callback(xk):
+    print(f"Iteration: {callback.iteration}, x = {xk}")
+    callback.iteration +=1
+
+callback.iteration = 0
+
 def market_year_outer_loop(market_data, theta, nus, R, K):
     beta = None
     def obj_theta(theta):
@@ -58,7 +64,7 @@ def market_year_outer_loop(market_data, theta, nus, R, K):
         W = np.eye(x.shape[1])
         beta = get_beta(delta, x, z, W)
         objective = gmm_objective(delta, x, z, beta, W)
-        return objective, beta
+        return objective
     print("got objective function")
-    result = opt.minimize(obj_theta, theta, method='Nelder-Mead')
+    result = opt.minimize(obj_theta, theta, method='Nelder-Mead', callback=callback)
     return result, beta
