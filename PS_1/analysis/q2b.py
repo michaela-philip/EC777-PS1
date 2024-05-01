@@ -29,5 +29,13 @@ theta = np.array([nested_logit_AV, nested_logit_HMO])
 #run BLP
 theta_2, beta = market_year_outer_loop(market_data, theta, nus, 500, 2)
 print(theta_2, beta)
-theta_2.to_pickle('data/output/"theta_2.pkl')
-beta.to_pickle('data/output/beta.pkl')
+
+# theta_2.to_pickle('data/output/theta_2.pkl')
+# beta.to_pickle('data/output/beta.pkl')
+
+# Save theta_2
+theta_2_df = pd.DataFrame(theta_2.x.reshape(-1, 1), columns=['theta_2'])
+theta_2_df.to_csv('data/output/theta_2.csv', index=False)
+
+# Save beta
+beta.to_csv('data/output/beta.csv', index=False)
