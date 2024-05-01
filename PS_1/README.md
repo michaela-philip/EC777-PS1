@@ -3,6 +3,7 @@ Empirical IO Problem Set 1 - Spring 2024
 
 Assignment by Professor Evan Saltzman
 
+### Background and Data Description
 'The ACA health insurance exchanges were established in every U.S. state in 2014 with the primary
 aims of (1) reducing the number of people without health insurance in the U.S. and (2) making
 health in- surance more affordable for those ineligible for employer-provided health insurance or
