@@ -18,7 +18,7 @@ market_data = pd.read_csv('./data/output/market_data.csv')
 market_data = get_instruments(market_data)
 market_data = market_data.dropna(subset=['AV', 'HMO'])
 market_data = market_data[market_data['house_share']>=0.01]
-from analysis.q2a import nested_logit_AV, nested_logit_HMO
+from analysis.2a import nested_logit_AV, nested_logit_HMO
 
 # np.random.seed(123)
 R = 500
