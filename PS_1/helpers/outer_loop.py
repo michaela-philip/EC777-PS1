@@ -69,5 +69,5 @@ def market_year_outer_loop(market_data, theta, nus, R, K):
         objective = gmm_objective(delta, x, z, beta, W)
         return objective
     print("got objective function")
-    result = opt.minimize(obj_theta, theta, method='Nelder-Mead', callback=callback)
+    result = opt.minimize(obj_theta, theta, method='Nelder-Mead', callback=callback, tol = 1e-9)
     return result, beta
