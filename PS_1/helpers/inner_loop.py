@@ -47,7 +47,7 @@ def market_year_inner_loop(df, theta, nus):
     grouped = df.groupby(['rating_area', 'year'])
     delta_all = []
     for name, group in grouped:
-        print('starting', name)
+        # print('starting', name)
         x = group[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
         z = group[['Insurer', 'AV', 'Metal_Level', 'HMO', 'avg_price_hh', 'instrument']]
         c = group[['AV', 'HMO']] 
@@ -61,7 +61,7 @@ def market_year_inner_loop(df, theta, nus):
         delta_df['group'] = str(name)
         # Append the delta DataFrame to delta_all list
         delta_all.append(delta_df)
-        print(name , ' done')
+        # print(name , ' done')
 
     # Concatenate all DataFrames in the list into a single DataFrame
     delta_all = pd.concat(delta_all, ignore_index=True)
