@@ -1,0 +1,35 @@
+---
+title: "EC777 Problem Set 2"
+author: "Michaela Philip"
+execute:
+  echo: false
+jupyter: python3
+---
+
+## Model
+
+### Write down the insurance firm’s first-order conditions for profit maximization. You can assume constant marginal cost and ignore administrative costs and any supply-side ACA policies such as reinsurance and risk adjustment.
+
+### Explain how you will identify marginal cost.
+
+###  Is the assumption of constant marginal cost reasonable in this market? If not, how could you adapt your model to allow for marginal cost to vary with price? Please carefully explain how you will estimate marginal cost and what additional data (if any) you would need
+
+### Reinsurance was a program in place for the first three years of the exchanges that helped to offset the cost of insuring enrollees with very high costs (e.g., those who need an organ transplant). The program was funded by the federal government. In setting premiums, firms estimate the expected percentage of their cost (claims) that reinsurance would cover. How would you adapt the model in part (a) to account for reinsurance? What impact should reinsurance have on equilibrium premiums 
+
+### Risk adjustment under the ACA is a program that requires firms with low-risk (low-cost) enrollees to make transfer payments to firms with high-risk (high-cost) enrollees. All transfer payments must sum to zero. What impact do you think risk adjustment has on premiums? How does omitting risk adjustment from the model bias your estimates of marginal cost?
+
+## Simulation of the Individual Mandate
+
+### Simulate repeal of the individual mandate using your logit model demand estimates from 2(a) of Problem Set 1 and the model in 1(a) above. Report (i) the average percentage change in premiums; (ii) the change in total exchange enrollment; (ii) the change in enrollment by metal tier; (iv) the change in consumer surplus, and (v) the change in social welfare.
+
+### Suppose Congress sets the penalty equal to the premium of the cheapest plan available. Simulate this policy change and report (i) the average percentage change in premiums; (ii) the change in total exchange enrollment; (ii) the change in enrollment by metal tier; (iv) the change in consumer surplus, and (v) the change in social welfare.
+
+###  In 2019, the individual mandate penalty was set to 0. In general, the observed impact on premiums and enrollment in the exchanges was minimal. Do your estimates in 2(a) align with the observed impact of the individual mandate. If not, what factors may explain the differences?
+
+## Simulation of a Merger
+
+###  Suppose that Anthem Blue Cross and Blue Shield of California merge to form Blue Cross Blue Shield (BCBS). The merged firm continues to offer all of the same plans that Anthem and Blue Shield were offering prior to the merger. What is the average percentage change in premiums for BCBS plans and for its competitors’ plans?
+
+### What would the change in marginal cost for BCBS have to be to offset the change in premiums?
+
+### What else would you what to know before deciding whether to approve the merger?
