@@ -8,6 +8,8 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(script_dir, '..'))
 
 main = pd.read_csv('./data/output/main.csv')
+main = main[main['household_size'] == 1]
+
 
 #Logit Model
 endog = market_data['avg_price_pp']
