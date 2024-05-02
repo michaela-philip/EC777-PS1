@@ -24,3 +24,7 @@ alpha = nested_logit_model.params['avg_price_pp']
 nested_logit_own_elast = get_own_elasticities(market_data, alpha)
 nested_logit_cross_elast = get_cross_elasticities(market_data, alpha)
 nested_logit_elast = [nested_logit_own_elast, nested_logit_cross_elast]
+
+elasticities = pd.concat(logit_elast, nested_logit_elast, axis = 1)
+elasticities.index = ['Own Price Elasticity', 'Cross Price Elasticity']
+elasticities.columns = ['Logit', 'Nested Logit', 'BLP']
