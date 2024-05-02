@@ -8,8 +8,15 @@ def get_shares(filepath):
     perc_white = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_white'].mean()
     fpl = filepath.groupby(['year', 'rating_area', 'plan_name'])['FPL'].mean()
     perc_male = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_male'].mean()
+    perc_0to17 = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_0to17'].mean()
+    perc_18to25 = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_18to25'].mean()
+    perc_26to34 = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_26to34'].mean()
+    perc_35to44 = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_35to44'].mean()
+    perc_45to54 = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_45to54'].mean()
+    perc_55to64 = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_55to64'].mean()
+    perc_65plus = filepath.groupby(['year', 'rating_area', 'plan_name'])['perc_65plus'].mean()
 
-    market_level = pd.concat({'n_ind': n_ind, 'n_house' : n_house, 'perc_white' : perc_white, 'fpl' : fpl, 'perc_male' : perc_male}, axis=1).reset_index()
+    market_level = pd.concat({'n_ind': n_ind, 'n_house' : n_house, 'perc_white' : perc_white, 'fpl' : fpl, 'perc_male' : perc_male, 'perc_0to17' : perc_0to17, 'perc_18to25' : perc_18to25, 'perc_26to34' : perc_26to34, 'perc_35to44' : perc_35to44, 'perc_45to54' : perc_45to54, 'perc_55to64' : perc_55to64, 'perc_65plus' : perc_65plus}, axis=1).reset_index()
     print(market_level.head())
 
     indiv_share = (market_level.groupby(['year', 'rating_area', 'plan_name'])['n_ind'].sum()) / (market_level.groupby(['year', 'rating_area'])['n_ind'].sum())
