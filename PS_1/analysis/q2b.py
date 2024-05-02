@@ -36,4 +36,4 @@ theta_2_df.to_csv('data/output/theta_2.csv', index=False)
 
 # Save beta
 beta_df = pd.DataFrame(beta, columns = ['beta'])
-beta.to_csv('data/output/beta.csv', index=False)
+beta_df.to_csv('data/output/beta.csv', index=False)
