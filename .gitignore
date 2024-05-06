@@ -2,3 +2,5 @@
 *.pyc
 ps1_files/
 ps2_files/
+*.html
+*.ipynb
