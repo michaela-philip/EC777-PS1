@@ -11,6 +11,10 @@ sys.path.append(os.path.join(script_dir, '..'))
 
 market_data_cf = pd.read_csv('./data/output/market_data_cf.csv')
 
+from helpers.instruments import get_instruments
+
+market_data_cf = get_instruments(market_data_cf)
+
 #Logit Model
 endog = market_data_cf['avg_price_pp']
 exog = pd.get_dummies(market_data_cf[['perc_white', 'perc_male', 'fpl', 'Insurer', 'AV', 'Metal_Level', 'HMO']], drop_first=True)
