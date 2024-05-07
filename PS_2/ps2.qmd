@@ -6,30 +6,44 @@ execute:
 jupyter: python3
 ---
 
-## Model
+## 1. Model
 
-### Write down the insurance firm’s first-order conditions for profit maximization. You can assume constant marginal cost and ignore administrative costs and any supply-side ACA policies such as reinsurance and risk adjustment.
+### (a) Write down the insurance firm’s first-order conditions for profit maximization. You can assume constant marginal cost and ignore administrative costs and any supply-side ACA policies such as reinsurance and risk adjustment.
+Firm $f$'s FOC for plan $j$ can be written as 
+$$
+s_j + /sum_{k \in J_f} (p_k - mc_k) \frac{\partial s_k}{\partial p_j} = 0
+$$ 
 
-### Explain how you will identify marginal cost.
+### (b) Explain how you will identify marginal cost.
+When we aggregate across plans and firms, we can write marginal cost as 
+$$
+mc = p - D^{-1}s $$
+where $D$ is a $J \times J$ matrix that we get using our demand estimates from Problem Set 1. 
 
-###  Is the assumption of constant marginal cost reasonable in this market? If not, how could you adapt your model to allow for marginal cost to vary with price? Please carefully explain how you will estimate marginal cost and what additional data (if any) you would need
+###  (c) Is the assumption of constant marginal cost reasonable in this market? If not, how could you adapt your model to allow for marginal cost to vary with price? Please carefully explain how you will estimate marginal cost and what additional data (if any) you would need
+Constant marginal cost is not a reasonable assumption here because healthcare costs will vary greatly among consumers and patients who anticipate using their health insurance more will have both higher marginal costs and likely choose a higher priced plan to ensure adequate coverage. To allow marginal cost to vary with price, we should assume some functional form for cost. For example, we can utilize the BLP cost function 
+$$ 
+c_j(q_j) = q_j \exp{w_j' \gamma + \omega_j} $$
+where $w_j$ are observed characteristics and $\omega_j$ are unobserved characteristics, both of which affect costs. In order to estimate this, we would need to use data on these additional characteristics. 
 
-### Reinsurance was a program in place for the first three years of the exchanges that helped to offset the cost of insuring enrollees with very high costs (e.g., those who need an organ transplant). The program was funded by the federal government. In setting premiums, firms estimate the expected percentage of their cost (claims) that reinsurance would cover. How would you adapt the model in part (a) to account for reinsurance? What impact should reinsurance have on equilibrium premiums 
+### (d) Reinsurance was a program in place for the first three years of the exchanges that helped to offset the cost of insuring enrollees with very high costs (e.g., those who need an organ transplant). The program was funded by the federal government. In setting premiums, firms estimate the expected percentage of their cost (claims) that reinsurance would cover. How would you adapt the model in part (a) to account for reinsurance? What impact should reinsurance have on equilibrium premiums 
+I would adapt the model to have marginal cost equal our estimated marginal cost minus the reinsurance rate. Overall, this should decrease marginal cost and therefore decrease price in equilibrium. 
 
-### Risk adjustment under the ACA is a program that requires firms with low-risk (low-cost) enrollees to make transfer payments to firms with high-risk (high-cost) enrollees. All transfer payments must sum to zero. What impact do you think risk adjustment has on premiums? How does omitting risk adjustment from the model bias your estimates of marginal cost?
+### (e) Risk adjustment under the ACA is a program that requires firms with low-risk (low-cost) enrollees to make transfer payments to firms with high-risk (high-cost) enrollees. All transfer payments must sum to zero. What impact do you think risk adjustment has on premiums? How does omitting risk adjustment from the model bias your estimates of marginal cost?
+Risk adjustment should increase the premiums of low-risk enrollees and decrease the premiums of high-risk enrollees. Overall, this should decrease the standard deviation of premiums 
 
-## Simulation of the Individual Mandate
+## 2. Simulation of the Individual Mandate
 
-### Simulate repeal of the individual mandate using your logit model demand estimates from 2(a) of Problem Set 1 and the model in 1(a) above. Report (i) the average percentage change in premiums; (ii) the change in total exchange enrollment; (ii) the change in enrollment by metal tier; (iv) the change in consumer surplus, and (v) the change in social welfare.
+### (a) Simulate repeal of the individual mandate using your logit model demand estimates from 2(a) of Problem Set 1 and the model in 1(a) above. Report (i) the average percentage change in premiums; (ii) the change in total exchange enrollment; (ii) the change in enrollment by metal tier; (iv) the change in consumer surplus, and (v) the change in social welfare.
 
-### Suppose Congress sets the penalty equal to the premium of the cheapest plan available. Simulate this policy change and report (i) the average percentage change in premiums; (ii) the change in total exchange enrollment; (ii) the change in enrollment by metal tier; (iv) the change in consumer surplus, and (v) the change in social welfare.
+### (b) Suppose Congress sets the penalty equal to the premium of the cheapest plan available. Simulate this policy change and report (i) the average percentage change in premiums; (ii) the change in total exchange enrollment; (ii) the change in enrollment by metal tier; (iv) the change in consumer surplus, and (v) the change in social welfare.
 
-###  In 2019, the individual mandate penalty was set to 0. In general, the observed impact on premiums and enrollment in the exchanges was minimal. Do your estimates in 2(a) align with the observed impact of the individual mandate. If not, what factors may explain the differences?
+###  (c) In 2019, the individual mandate penalty was set to 0. In general, the observed impact on premiums and enrollment in the exchanges was minimal. Do your estimates in 2(a) align with the observed impact of the individual mandate. If not, what factors may explain the differences?
 
-## Simulation of a Merger
+## 3. Simulation of a Merger
 
-###  Suppose that Anthem Blue Cross and Blue Shield of California merge to form Blue Cross Blue Shield (BCBS). The merged firm continues to offer all of the same plans that Anthem and Blue Shield were offering prior to the merger. What is the average percentage change in premiums for BCBS plans and for its competitors’ plans?
+###  (a) Suppose that Anthem Blue Cross and Blue Shield of California merge to form Blue Cross Blue Shield (BCBS). The merged firm continues to offer all of the same plans that Anthem and Blue Shield were offering prior to the merger. What is the average percentage change in premiums for BCBS plans and for its competitors’ plans?
 
-### What would the change in marginal cost for BCBS have to be to offset the change in premiums?
+### (b) What would the change in marginal cost for BCBS have to be to offset the change in premiums?
 
-### What else would you what to know before deciding whether to approve the merger?
+### (c) What else would you what to know before deciding whether to approve the merger?
