@@ -30,7 +30,7 @@ where $w_j$ are observed characteristics and $\omega_j$ are unobserved character
 I would adapt the model to have marginal cost equal our estimated marginal cost minus the reinsurance rate. Overall, this should decrease marginal cost and therefore decrease price in equilibrium. 
 
 ### (e) Risk adjustment under the ACA is a program that requires firms with low-risk (low-cost) enrollees to make transfer payments to firms with high-risk (high-cost) enrollees. All transfer payments must sum to zero. What impact do you think risk adjustment has on premiums? How does omitting risk adjustment from the model bias your estimates of marginal cost?
-Risk adjustment should increase the premiums of low-risk enrollees and decrease the premiums of high-risk enrollees. Overall, this should decrease the standard deviation of premiums 
+Risk adjustment should increase the marginal costs of low-risk enrollees and decrease the marginal costs of high-risk enrollees. Since it should differentially impact marginal costs in different directions, it's hard to say how it would bias the marginal cost estimate. However, not including risk adjustment should lead to a larger standard deviation in marginal costs, which may affect inference. 
 
 ## 2. Simulation of the Individual Mandate
 
