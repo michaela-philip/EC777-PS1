@@ -6,12 +6,12 @@ import statsmodels.api as sm
 from linearmodels.iv import IV2SLS
 from stargazer.stargazer import Stargazer
 script_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.join(script_dir, '..'))
+sys.path.append(os.path.join(script_dir, '..', '..'))
 # os.chdir('PS_1')
 
-from helpers.instruments import get_instruments
+from PS_1.helpers.instruments import get_instruments
 
-market_data = pd.read_csv('./data/output/market_data.csv')
+market_data = pd.read_csv('PS_1/data/output/market_data.csv')
 market_data = get_instruments(market_data)
 market_data = market_data.dropna(subset=['AV', 'HMO'])
 market_data = market_data[market_data['house_share'] >= 0.01]
