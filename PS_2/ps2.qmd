@@ -11,7 +11,7 @@ jupyter: python3
 ### (a) Write down the insurance firm’s first-order conditions for profit maximization. You can assume constant marginal cost and ignore administrative costs and any supply-side ACA policies such as reinsurance and risk adjustment.
 Firm $f$'s FOC for plan $j$ can be written as 
 $$
-s_j + /sum_{k \in J_f} (p_k - mc_k) \frac{\partial s_k}{\partial p_j} = 0
+s_j + \sum_{k \in J_f} (p_k - mc_k) \frac{\partial s_k}{\partial p_j} = 0
 $$ 
 
 ### (b) Explain how you will identify marginal cost.
@@ -23,7 +23,7 @@ where $D$ is a $J \times J$ matrix that we get using our demand estimates from P
 ###  (c) Is the assumption of constant marginal cost reasonable in this market? If not, how could you adapt your model to allow for marginal cost to vary with price? Please carefully explain how you will estimate marginal cost and what additional data (if any) you would need
 Constant marginal cost is not a reasonable assumption here because healthcare costs will vary greatly among consumers and patients who anticipate using their health insurance more will have both higher marginal costs and likely choose a higher priced plan to ensure adequate coverage. To allow marginal cost to vary with price, we should assume some functional form for cost. For example, we can utilize the BLP cost function 
 $$ 
-c_j(q_j) = q_j \exp{w_j' \gamma + \omega_j} $$
+c_j(q_j) = q_j \exp({w_j' \gamma + \omega_j}) $$
 where $w_j$ are observed characteristics and $\omega_j$ are unobserved characteristics, both of which affect costs. In order to estimate this, we would need to use data on these additional characteristics. 
 
 ### (d) Reinsurance was a program in place for the first three years of the exchanges that helped to offset the cost of insuring enrollees with very high costs (e.g., those who need an organ transplant). The program was funded by the federal government. In setting premiums, firms estimate the expected percentage of their cost (claims) that reinsurance would cover. How would you adapt the model in part (a) to account for reinsurance? What impact should reinsurance have on equilibrium premiums 
@@ -35,15 +35,21 @@ Risk adjustment should increase the marginal costs of low-risk enrollees and dec
 ## 2. Simulation of the Individual Mandate
 
 ### (a) Simulate repeal of the individual mandate using your logit model demand estimates from 2(a) of Problem Set 1 and the model in 1(a) above. Report (i) the average percentage change in premiums; (ii) the change in total exchange enrollment; (ii) the change in enrollment by metal tier; (iv) the change in consumer surplus, and (v) the change in social welfare.
+Using estimated demand from PS1, I calculated a vector of marginal costs for each plan offered in each market-year pair. From there, I would adjust the price paid for each household to reflect no penalty, reestimate shares for each plan, and then redo my logit analysis from PS1 to get a new matrix D. From there, I can use the same marginal cost as I initially calculated and, using my new matrix D and new vector of shares, calculate a new vector p. 
 
 ### (b) Suppose Congress sets the penalty equal to the premium of the cheapest plan available. Simulate this policy change and report (i) the average percentage change in premiums; (ii) the change in total exchange enrollment; (ii) the change in enrollment by metal tier; (iv) the change in consumer surplus, and (v) the change in social welfare.
+I would proceed with this exactly as in (a), but instead of changing the price to reflect no penalty I would change it to reflect the appropriate penalty for each market-year pair. 
 
 ###  (c) In 2019, the individual mandate penalty was set to 0. In general, the observed impact on premiums and enrollment in the exchanges was minimal. Do your estimates in 2(a) align with the observed impact of the individual mandate. If not, what factors may explain the differences?
+If there were differences between estimated and observed impact, it may be due to people's anticipation of the individual mandate penalty going to 0 before it actually happened. 
 
 ## 3. Simulation of a Merger
 
 ###  (a) Suppose that Anthem Blue Cross and Blue Shield of California merge to form Blue Cross Blue Shield (BCBS). The merged firm continues to offer all of the same plans that Anthem and Blue Shield were offering prior to the merger. What is the average percentage change in premiums for BCBS plans and for its competitors’ plans?
+To solve this, I would recalculate the matrix D with this new simulated firm and use the existing marginal cost and share vectors to calculate a new price vector. 
 
 ### (b) What would the change in marginal cost for BCBS have to be to offset the change in premiums?
+To solve this, I would calculatae marginal cost using my new matrix D and my old share and price vectors. 
 
 ### (c) What else would you what to know before deciding whether to approve the merger?
+If I were the DOJ, I would want to know the relative market power of each of these firms individually before approving a merger between them to ensure that the market remains competitive. 
